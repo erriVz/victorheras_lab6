@@ -13,19 +13,19 @@ const message = document.querySelector("#message")
 
 async function getRecipe() {
 
-    try {
-        const response = await fetch('https://dummyjson.com/recipes/search?q=Margherita'); //+encodeURIComponent(search.value.trim));
+    const response = await fetch('https://dummyjson.com/recipes/search?q=Margherita'); //+encodeURIComponent(search.value.trim));
 
         if (!response.ok){
-            throw new resError(response.status)
+            throw new resError(response.status);
         }
 
-    } catch(resError){
-
-    }
     
-}
+    //Gör om response från JSON till ett obj
+    const recipeData = await response.json();
 
+    return recipeData.recipes;
+}
+    
 function showRecipe(){
 
     //Tar bort gamla receptet
