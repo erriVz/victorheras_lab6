@@ -15,7 +15,8 @@ async function getRecipe() {
 
     const response = await fetch('https://dummyjson.com/recipes/search?q=Margherita'); //+encodeURIComponent(search.value.trim));
 
-        if (!response.ok){
+    //Kollar om svaret från servern är ok, skapar ett fel annars
+    if (!response.ok){
             throw new resError(response.status);
         }
 
@@ -25,39 +26,47 @@ async function getRecipe() {
 
     return recipeData.recipes;
 }
-    
-function showRecipe(){
+getRecipe();
+
+//Funciton som skriver ut recepter på sidan
+function showRecipe(obj){
 
     //Tar bort gamla receptet
     recipe.innerHTML = "";
 
-    /*Plan på visa recept
-
-    for (let i=0; i<obj.ingrediant.length; i++){
-        let ingList =+ "<li>" + obj.ingrediant[i] + "</li>";
+    ///Loop som skapar ingridients listan
+    //Tömmer ingList
+    let ingList = "";
+    for (let i=0; i<obj.ingredients.length; i++) {
+        ingList =+ "<li>" + obj.ingredients[i] + "</li>";
     }
+
+    ///Loop som skapar instrucions listan
+    //Tömmer instrList
+    let instrList = "";
+    for (let i=0; i<obj.instuctions.length; i++){
+        instrList =+ "<li>" + obj.instruction[i] + "</li>";
+    }
+
     
-    for (let i=0; i<obj.instuction.length; i++){
-        let instrList =+ "<li>" + obj.instruction[i] + "</li>";
-    }
+    recipe.innerHTML = 
+        "<article>" + 
+            "<h3>" + obj.name + "</h3>" +
+            "<img src='" + obj.image + "' alt='" + obj.name +"'>" + 
+            "<div class='recipe-info'>" +
+                "<p><strong>Servings:</strong>" + obj.servings + "</p>" +
+                "<p><strong>Prep time:</strong>" + obj.prepTimeMinutes + "minutes</p>" +
+                "<p><strong>Cooking time:</strong>" + obj.cookTimeMinutes + "minutes</p>" +
+                "<p><strong>Difficulty:</strong>" + obj.difficulty + "</p>" +
+            "</div>" +
+        "<h4>Ingredients</h4>" +
+        "<ul>" + ingList + "</ul>" +
+        "<h4>Inscturction</h4>" +
+        "<ol>" + instrList + "</ol>"
+        "</article>";
 
-
-    recipe.innerHTML = "<article>" + "<h3>" + obj.recNamn + "</h3>" +
-    "<img src='" + obj.image + "' alt='" + obj.name +"'>" + 
-    "<div class='recipe-info'>" +
-        "<p><strong>obj.Servings:</strong> x</p>" +
-        "<p><strong>obj.Prep time:</strong> y minutes</p>" +
-        "<p><strong>obj.Cooking time:</strong> z minutes</p>" +
-        "<p><strong>obj.Difficulty:</strong> 'difficulty'</p>" +
-    </div> +
-    "<h4>Ingredients</h4>" +
-    "<ul>" + ingList "</ul>" +
-    "<h4>Inscturction</h4>" +
-    "<ol>" + instrList + "</ol>"
-    "</article>""
-
-    */
 }
+    
 
 searchform.addEventListener("submit", function(event){
     event.preventDefault();
