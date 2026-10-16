@@ -7,7 +7,8 @@
 const searchform = document.querySelector("#searchform");
 const search = document.querySelector("#search");
 const error = document.querySelector("#error");
-const recipe = document.querySelector("recipe");
+const recipe = document.querySelector("#recipe");
+const message = document.querySelector("#message")
 
 
 async function getRecipe() {
@@ -32,18 +33,18 @@ function showRecipe(){
 
     /*Plan på visa recept
 
-    for (let i=0; i<obj.ingrediant.lenght; i++){
-        const ingList =+ "<li>" + obj.ingrediant[i] + "</li>";
+    for (let i=0; i<obj.ingrediant.length; i++){
+        let ingList =+ "<li>" + obj.ingrediant[i] + "</li>";
     }
     
-    for (let i=0; i<obj.instuction.lenght; i++){
-        const instrList =+ "<li>" + obj.instruction[i] + "</li>";
+    for (let i=0; i<obj.instuction.length; i++){
+        let instrList =+ "<li>" + obj.instruction[i] + "</li>";
     }
 
 
     recipe.innerHTML = "<article>" + "<h3>" + obj.recNamn + "</h3>" +
-    "<img src='obj.src', alt='obj.alt'>" + 
-    "<div class='obj.recipe-info'>"" +
+    "<img src='" + obj.image + "' alt='" + obj.name +"'>" + 
+    "<div class='recipe-info'>" +
         "<p><strong>obj.Servings:</strong> x</p>" +
         "<p><strong>obj.Prep time:</strong> y minutes</p>" +
         "<p><strong>obj.Cooking time:</strong> z minutes</p>" +
@@ -61,6 +62,7 @@ function showRecipe(){
 searchform.addEventListener("submit", function(event){
     event.preventDefault();
     error.innerHTML = "";
+    message.innerHTML = "";
 
     //kollar om sökfras input är tomt och skriver ev ut isåfall felmeddelande
     if (search.value.trim()===""){ 
