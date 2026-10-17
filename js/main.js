@@ -56,14 +56,14 @@ function showRecipe(obj){
     //Tömmer ingList
     let ingList = "";
     for (let i=0; i<obj.ingredients.length; i++) {
-        ingList =+ "<li>" + obj.ingredients[i] + "</li>";
+        ingList += "<li>" + obj.ingredients[i] + "</li>";
     }
 
     ///Loop som skapar instrucions listan
     //Tömmer instrList
     let instrList = "";
     for (let i=0; i<obj.instuctions.length; i++){
-        instrList =+ "<li>" + obj.instruction[i] + "</li>";
+        instrList += "<li>" + obj.instruction[i] + "</li>";
     }
 
     
@@ -88,12 +88,18 @@ function showRecipe(obj){
 
 searchform.addEventListener("submit", function(event){
     event.preventDefault();
+
+    //Tar bort gamla fel och meddelanden
     error.innerHTML = "";
     message.innerHTML = "";
 
-    //kollar om sökfras input är tomt och skriver ev ut isåfall felmeddelande
+    //kollar om sökfras input är tomt och skriver ev ut isåfall felmeddelande samt return
     if (search.value.trim()===""){ 
         error.innerHTML = "Du måste fylla i en sökfras"; 
+        return; //Avbryter så inget anrop görs
     }
+
+    //Kallar getRecipe som hämtar och visar receptet
+    getRecipe(search.value.trim());
 
     });
