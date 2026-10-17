@@ -72,14 +72,14 @@ function showRecipe(obj){
             "<h3>" + obj.name + "</h3>" +
             "<img src='" + obj.image + "' alt='" + obj.name +"'>" + 
             "<div class='recipe-info'>" +
-                "<p><strong>Servings:</strong>" + obj.servings + "</p>" +
-                "<p><strong>Prep time:</strong>" + obj.prepTimeMinutes + "minutes</p>" +
-                "<p><strong>Cooking time:</strong>" + obj.cookTimeMinutes + "minutes</p>" +
-                "<p><strong>Difficulty:</strong>" + obj.difficulty + "</p>" +
+                "<p><strong>Servings:</strong> " + obj.servings + "</p>" +
+                "<p><strong>Prep time:</strong> " + obj.prepTimeMinutes + "minutes</p>" +
+                "<p><strong>Cooking time:</strong> " + obj.cookTimeMinutes + "minutes</p>" +
+                "<p><strong>Difficulty:</strong> " + obj.difficulty + "</p>" +
             "</div>" +
         "<h4>Ingredients</h4>" +
         "<ul>" + ingList + "</ul>" +
-        "<h4>Inscturction</h4>" +
+        "<h4>Instructions</h4>" +
         "<ol>" + instrList + "</ol>" +
         "</article>";
 
