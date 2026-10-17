@@ -18,12 +18,12 @@ async function getRecipe() {
 
         //Kollar om svaret från servern är ok, skapar ett fel annars
         if (!response.ok){
-            throw new resError(response.status);
+            throw new Error(response.status);
         }
 
         //Gör om response från JSON till ett obj
         const recipeData = await response.json();
-        const recipe = recipeData.recipe;
+        const recipe = recipeData.recipes;
 
         //Om inget recept hittades med sökfrasen ge it meddelande och return
         if (recipe.length === 0){
@@ -62,8 +62,8 @@ function showRecipe(obj){
     ///Loop som skapar instrucions listan
     //Tömmer instrList
     let instrList = "";
-    for (let i=0; i<obj.instuctions.length; i++){
-        instrList += "<li>" + obj.instruction[i] + "</li>";
+    for (let i=0; i<obj.instructions.length; i++){
+        instrList += "<li>" + obj.instructions[i] + "</li>";
     }
 
     
@@ -80,7 +80,7 @@ function showRecipe(obj){
         "<h4>Ingredients</h4>" +
         "<ul>" + ingList + "</ul>" +
         "<h4>Inscturction</h4>" +
-        "<ol>" + instrList + "</ol>"
+        "<ol>" + instrList + "</ol>" +
         "</article>";
 
 }
