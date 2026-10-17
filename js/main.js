@@ -21,18 +21,18 @@ async function getRecipe() {
             throw new Error(response.status);
         }
 
-        //Gör om response från JSON till ett obj
+        //Gör om response från JSON till JS
         const recipeData = await response.json();
         const recipe = recipeData.recipes;
 
-        //Om inget recept hittades med sökfrasen ge it meddelande och return
+        //Om inget recept hittades med sökfrasen ge meddelande att testa nytt och return
         if (recipe.length === 0){
             recipeSection.innerHTML = "";
             message.innerHTML = "Inget recept hittades, prova med en annan sökfras";
-            return;
+            return; //Avbryter så inget mer kallas
         }
 
-        //Visar bara första recepted
+        //Kallar function showRecipe och visar första receptet
         showRecipe(recipe[0]);
 
     } catch(err){
@@ -46,20 +46,20 @@ async function getRecipe() {
 }
 
 
-//Funciton som skriver ut recepter på sidan
+//Funciton som skriver ut receptet på sidan
 function showRecipe(obj){
 
     //Tar bort gamla receptet
     recipeSection.innerHTML = "";
 
-    ///Loop som skapar ingridients listan
+    ///Loop som skapar ingredients listan
     //Tömmer ingList
     let ingList = "";
     for (let i=0; i<obj.ingredients.length; i++) {
         ingList += "<li>" + obj.ingredients[i] + "</li>";
     }
 
-    ///Loop som skapar instrucions listan
+    ///Loop som skapar instructions listan
     //Tömmer instrList
     let instrList = "";
     for (let i=0; i<obj.instructions.length; i++){
@@ -96,10 +96,14 @@ searchform.addEventListener("submit", function(event){
     //kollar om sökfras input är tomt och skriver ev ut isåfall felmeddelande samt return
     if (search.value.trim()===""){ 
         error.innerHTML = "Du måste fylla i en sökfras"; 
-        return; //Avbryter så inget anrop görs
+
+        /* Osäker om vid när ett nytt recept kallas men search är tom om tidigare receptet som ev har visats skall tömmas, har denna del i en kommentar isåfall
+        recipeSection.innerHTML = "";
+        */
+        return; //Avbryter så inget vidare anrop görs
     }
 
     //Kallar getRecipe som hämtar och visar receptet
-    getRecipe(search.value.trim());
+    getRecipe();
 
     });
