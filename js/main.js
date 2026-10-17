@@ -14,7 +14,7 @@ const message = document.querySelector("#message")
 async function getRecipe() {
 
     try {
-        const response = await fetch('https://dummyjson.com/recipes/search?q=Margherita'); //+encodeURIComponent(search.value.trim));
+        const response = await fetch('https://dummyjson.com/recipes/search?q=' + search.value.trim());
 
         //Kollar om svaret från servern är ok, skapar ett fel annars
         if (!response.ok){
