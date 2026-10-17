@@ -7,32 +7,50 @@
 const searchform = document.querySelector("#searchform");
 const search = document.querySelector("#search");
 const error = document.querySelector("#error");
-const recipe = document.querySelector("#recipe");
+const recipeSection = document.querySelector("#recipe");
 const message = document.querySelector("#message")
 
 
 async function getRecipe() {
 
-    const response = await fetch('https://dummyjson.com/recipes/search?q=Margherita'); //+encodeURIComponent(search.value.trim));
+    try {
+        const response = await fetch('https://dummyjson.com/recipes/search?q=Margherita'); //+encodeURIComponent(search.value.trim));
 
-    //Kollar om svaret från servern är ok, skapar ett fel annars
-    if (!response.ok){
+        //Kollar om svaret från servern är ok, skapar ett fel annars
+        if (!response.ok){
             throw new resError(response.status);
         }
 
-    
-    //Gör om response från JSON till ett obj
-    const recipeData = await response.json();
+        //Gör om response från JSON till ett obj
+        const recipeData = await response.json();
+        const recipe = recipeData.recipe;
 
-    return recipeData.recipes;
+        //Om inget recept hittades med sökfrasen ge it meddelande och return
+        if (recipe.length === 0){
+            recipeSection.innerHTML = "";
+            message.innerHTML = "Inget recept hittades, prova med en annan sökfras";
+            return;
+        }
+
+        //Visar bara första recepted
+        showRecipe(recipe[0]);
+
+    } catch(err){
+        //Om fel sker vid inhämtning
+        recipeSection.innerHTML = "";
+        message.innerHTML = "Ett fel inträffade, Försök igen";
+        //Skriver ut till console error fel
+        console.error(err);
+    }
+
 }
-getRecipe();
+
 
 //Funciton som skriver ut recepter på sidan
 function showRecipe(obj){
 
     //Tar bort gamla receptet
-    recipe.innerHTML = "";
+    recipeSection.innerHTML = "";
 
     ///Loop som skapar ingridients listan
     //Tömmer ingList
@@ -49,7 +67,7 @@ function showRecipe(obj){
     }
 
     
-    recipe.innerHTML = 
+    recipeSection.innerHTML = 
         "<article>" + 
             "<h3>" + obj.name + "</h3>" +
             "<img src='" + obj.image + "' alt='" + obj.name +"'>" + 
